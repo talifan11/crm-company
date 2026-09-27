@@ -1,17 +1,24 @@
 /**
  * Zustand store — авторизация
+ * Исправлено: корректная работа persist + функции
  */
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { User, UserRole } from '../types';
 
-interface AuthStore {
+interface AuthState {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
+}
+
+interface AuthActions {
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
+  resetAuth: () => void;
 }
+
+type AuthStore = AuthState & AuthActions;
 
 // Демо-пользователи для статического фронтенда
 const DEMO_USERS: Record<string, { password: string; user: User }> = {
@@ -29,18 +36,22 @@ const DEMO_USERS: Record<string, { password: string; user: User }> = {
   },
 };
 
+const initialState: AuthState = {
+  user: null,
+  token: null,
+  isAuthenticated: false,
+};
+
 export const useAuthStore = create<AuthStore>()(
   persist(
-    (set) => ({
-      user: null,
-      token: null,
-      isAuthenticated: false,
+    (set, get) => ({
+      ...initialState,
 
       login: async (email: string, password: string): Promise<boolean> => {
         // Имитация задержки сети
         await new Promise(r => setTimeout(r, 600));
         
-        const entry = DEMO_USERS[email];
+        const entry = DEMO_USERS[email.toLowerCase().trim()];
         if (!entry || entry.password !== password) {
           return false;
         }
@@ -54,9 +65,36 @@ export const useAuthStore = create<AuthStore>()(
       },
 
       logout: () => {
-        set({ user: null, token: null, isAuthenticated: false });
+        set({ ...initialState });
+      },
+
+      resetAuth: () => {
+        set({ ...initialState });
       },
     }),
-    { name: 'isp-auth' }
+    {
+      name: 'isp-auth',
+      storage: createJSONStorage(() => localStorage),
+      // Сохраняем только данные состояния, не функции
+      partialize: (state) => ({
+        user: state.user,
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+      }),
+      // При rehydration проверяем целостность
+      onRehydrateStorage: () => {
+        return (state, error) => {
+          if (error || !state) {
+            // Если ошибка — сбрасываем
+            useAuthStore.setState({ ...initialState });
+            return;
+          }
+          // Если есть токен, но нет пользователя — сбрасываем
+          if (state.isAuthenticated && !state.user) {
+            useAuthStore.setState({ ...initialState });
+          }
+        };
+      },
+    }
   )
 );

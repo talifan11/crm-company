@@ -12,6 +12,7 @@ import MapPage from './pages/MapPage';
 import CablesPage from './pages/CablesPage';
 import ObjectsPage from './pages/ObjectsPage';
 import DocumentsPage from './pages/DocumentsPage';
+import ImportPage from './pages/ImportPage';
 import UsersPage from './pages/UsersPage';
 import AuditPage from './pages/AuditPage';
 
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/cables" element={<CablesPage />} />
           <Route path="/objects" element={<ObjectsPage />} />
           <Route path="/documents" element={<DocumentsPage />} />
+          <Route path="/import" element={<ImportPage />} />
           <Route path="/admin/users" element={<UsersPage />} />
           <Route path="/audit" element={<AuditPage />} />
         </Route>

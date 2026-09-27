@@ -4,13 +4,14 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
 import { useUIStore } from '../../stores/uiStore';
-import { Map, Cable, Box, FileText, Users, ClipboardList, LogOut, Sun, Moon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Map, Cable, Box, FileText, Users, ClipboardList, LogOut, Sun, Moon, ChevronLeft, ChevronRight, Upload } from 'lucide-react';
 
 const NAV_ITEMS = [
   { to: '/map', icon: Map, label: 'Карта' },
   { to: '/cables', icon: Cable, label: 'Кабели' },
   { to: '/objects', icon: Box, label: 'Объекты' },
   { to: '/documents', icon: FileText, label: 'Документы' },
+  { to: '/import', icon: Upload, label: 'Импорт' },
   { to: '/admin/users', icon: Users, label: 'Пользователи', adminOnly: true },
   { to: '/audit', icon: ClipboardList, label: 'Журнал', adminOnly: true },
 ];
