@@ -6,7 +6,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useMapStore } from '../../stores/mapStore';
-import { mockCables, mockObjects, LAYING_COLORS, OBJECT_ICONS } from '../../data/mockData';
+import { mockCables, mockObjects, LAYING_COLORS, OBJECT_COLORS } from '../../data/mockData';
 import type { Cable, InfraObject } from '../../types';
 
 export default function MapView() {

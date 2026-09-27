@@ -24,11 +24,14 @@ export default function UsersPage() {
 
   return (
     <div className="p-6 h-full overflow-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Пользователи</h1>
+<div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>Пользователи</h1>
+          <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>Управление доступом</p>
+        </div>
         <button
           onClick={() => setShowAdd(!showAdd)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white"
+          className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-white"
           style={{ background: 'var(--color-accent)' }}
         >
           <UserPlus className="w-4 h-4" /> Добавить

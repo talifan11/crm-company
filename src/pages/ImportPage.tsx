@@ -343,47 +343,47 @@ export default function ImportPage() {
 
   return (
     <div className="p-6 h-full overflow-auto">
-      <div className="flex items-center justify-between mb-6">
+<div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Импорт данных</h1>
-          <p className="text-sm mt-1" style={{ color: 'var(--color-text-secondary)' }}>
-            Загрузка кабелей и объектов из KML, GeoJSON, CSV
+          <h1 className="text-xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>Импорт данных</h1>
+          <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
+            Загрузка из KML, GeoJSON, CSV
           </p>
         </div>
         {preview && (
-          <button onClick={handleReset} className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm"
+          <button onClick={handleReset} className="flex items-center gap-2 px-4 py-2 rounded-md text-sm"
             style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border)', color: 'var(--color-text-secondary)' }}>
             <Trash2 className="w-4 h-4" /> Сбросить
           </button>
         )}
       </div>
 
-      {/* Drag & Drop зона */}
+{/* Drag & Drop зона */}
       {!preview && (
         <div
           {...getRootProps()}
-          className={`rounded-xl p-12 text-center cursor-pointer transition-colors mb-6 ${isDragActive ? 'opacity-80' : ''}`}
+          className={`rounded-md p-10 text-center cursor-pointer transition-colors mb-6 ${isDragActive ? 'opacity-80' : ''}`}
           style={{
             background: 'var(--color-bg-secondary)',
             border: `2px dashed ${isDragActive ? 'var(--color-accent)' : 'var(--color-border)'}`,
           }}
         >
           <input {...getInputProps()} />
-          <Upload className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--color-accent)' }} />
-          <p className="text-lg font-medium mb-2" style={{ color: 'var(--color-text-primary)' }}>
-            {isDragActive ? 'Отпустите файл здесь...' : 'Перетащите файл или нажмите для выбора'}
+          <Upload className="w-10 h-10 mx-auto mb-3" style={{ color: 'var(--color-accent)' }} />
+          <p className="text-base font-medium mb-1.5" style={{ color: 'var(--color-text-primary)' }}>
+            {isDragActive ? 'Отпустите файл' : 'Перетащите файл или нажмите для выбора'}
           </p>
-          <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
-            Поддерживаемые форматы: KML, KMZ, GeoJSON, CSV (до 50 МБ)
+          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+            KML, KMZ, GeoJSON, CSV (до 50 МБ)
           </p>
-          <div className="flex justify-center gap-4 mt-6">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs" style={{ background: 'var(--color-bg-primary)', color: 'var(--color-text-secondary)' }}>
+          <div className="flex justify-center gap-3 mt-5">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs" style={{ background: 'var(--color-bg-primary)', color: 'var(--color-text-muted)' }}>
               <Globe className="w-3 h-3" /> KML/KMZ
             </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs" style={{ background: 'var(--color-bg-primary)', color: 'var(--color-text-secondary)' }}>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs" style={{ background: 'var(--color-bg-primary)', color: 'var(--color-text-muted)' }}>
               <Map className="w-3 h-3" /> GeoJSON
             </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs" style={{ background: 'var(--color-bg-primary)', color: 'var(--color-text-secondary)' }}>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs" style={{ background: 'var(--color-bg-primary)', color: 'var(--color-text-muted)' }}>
               <FileSpreadsheet className="w-3 h-3" /> CSV
             </div>
           </div>

@@ -3,7 +3,7 @@
  */
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { mockObjects, OBJECT_TYPE_LABELS, OBJECT_ICONS } from '../data/mockData';
+import { mockObjects, OBJECT_TYPE_LABELS, OBJECT_COLORS } from '../data/mockData';
 import { ArrowUpDown, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { InfraObject } from '../types';
 
@@ -40,9 +40,11 @@ export default function ObjectsPage() {
 
   return (
     <div className="p-6 h-full overflow-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Объекты инфраструктуры</h1>
-        <span className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>Всего: {filtered.length}</span>
+<div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>Объекты инфраструктуры</h1>
+          <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>Всего: {filtered.length}</p>
+        </div>
       </div>
 
       <div className="mb-4">
@@ -86,9 +88,9 @@ export default function ObjectsPage() {
                 onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
               >
                 <td className="px-4 py-3 font-mono text-xs" style={{ color: 'var(--color-accent)' }}>{obj.code}</td>
-                <td className="px-4 py-3" style={{ color: 'var(--color-text-primary)' }}>
+<td className="px-4 py-3" style={{ color: 'var(--color-text-primary)' }}>
                   <span className="flex items-center gap-2">
-                    <span>{OBJECT_ICONS[obj.object_type]}</span>
+                    <span className="w-2.5 h-2.5 rounded-full" style={{ background: OBJECT_COLORS[obj.object_type] }} />
                     {obj.name}
                   </span>
                 </td>

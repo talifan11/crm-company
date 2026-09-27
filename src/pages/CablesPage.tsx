@@ -40,9 +40,11 @@ export default function CablesPage() {
 
   return (
     <div className="p-6 h-full overflow-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--color-text-primary)' }}>Кабельные линии</h1>
-        <span className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>Всего: {filtered.length}</span>
+<div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-xl font-semibold" style={{ color: 'var(--color-text-primary)' }}>Кабельные линии</h1>
+          <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>Всего: {filtered.length}</p>
+        </div>
       </div>
 
       {/* Поиск */}

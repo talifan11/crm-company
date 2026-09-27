@@ -139,15 +139,15 @@ export const LAYING_COLORS: Record<string, string> = {
   wall: '#ef4444',     // красный
 };
 
-// Иконки для типов объектов (emoji)
-export const OBJECT_ICONS: Record<string, string> = {
-  house: '🏠',
-  manhole: '🕳️',
-  coupling: '🔗',
-  olt: '📡',
-  splitter: '🔀',
-  cross_box: '📦',
-  substation: '⚡',
+// Цвета для типов объектов
+export const OBJECT_COLORS: Record<string, string> = {
+  house: '#10b981',      // emerald
+  manhole: '#6b7280',    // gray
+  coupling: '#06b6d4',   // cyan
+  olt: '#ef4444',        // red
+  splitter: '#f59e0b',   // amber
+  cross_box: '#8b5cf6',  // violet
+  substation: '#ec4899', // pink
 };
 
 // Русские названия
