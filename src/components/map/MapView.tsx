@@ -7,6 +7,8 @@ import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useMapStore } from '../../stores/mapStore';
 import { mockCables, mockObjects, LAYING_COLORS, OBJECT_COLORS } from '../../data/mockData';
+import { mockOnlineBrigades } from '../../data/mockBrigades';
+import { BRIGADE_STATUS_COLORS } from '../../types/brigade';
 import type { Cable, InfraObject } from '../../types';
 
 export default function MapView() {
@@ -160,6 +162,78 @@ export default function MapView() {
           'text-halo-width': 1,
         },
       });
+
+      // Слой бригад онлайн
+      const brigadesGeoJSON: GeoJSON.FeatureCollection = {
+        type: 'FeatureCollection',
+        features: mockOnlineBrigades.map((b) => ({
+          type: 'Feature',
+          properties: {
+            brigade_id: b.brigade_id,
+            brigade_name: b.brigade_name,
+            status: b.status,
+            phone: b.phone,
+          },
+          geometry: typeof b.geometry === 'string' ? JSON.parse(b.geometry) : b.geometry,
+        })),
+      };
+
+      map.addSource('brigades', { type: 'geojson', data: brigadesGeoJSON });
+
+      // Слой бригад — круги с цветом по статусу
+      map.addLayer({
+        id: 'brigades-circle',
+        type: 'circle',
+        source: 'brigades',
+        paint: {
+          'circle-radius': 10,
+          'circle-color': [
+            'match',
+            ['get', 'status'],
+            'active', BRIGADE_STATUS_COLORS.active,
+            'on_ticket', BRIGADE_STATUS_COLORS.on_ticket,
+            'en_route', BRIGADE_STATUS_COLORS.en_route,
+            'day_off', BRIGADE_STATUS_COLORS.day_off,
+            'inactive', BRIGADE_STATUS_COLORS.inactive,
+            '#888888',
+          ],
+          'circle-stroke-width': 3,
+          'circle-stroke-color': '#ffffff',
+          'circle-opacity': 0.9,
+        },
+      });
+
+      // Слой бригад — метки
+      map.addLayer({
+        id: 'brigades-labels',
+        type: 'symbol',
+        source: 'brigades',
+        layout: {
+          'text-field': ['get', 'brigade_name'],
+          'text-size': 11,
+          'text-offset': [0, 1.8],
+          'text-anchor': 'top',
+          'text-font': ['Open Sans Bold'],
+        },
+        paint: {
+          'text-color': '#ffffff',
+          'text-halo-color': '#000000',
+          'text-halo-width': 2,
+        },
+      });
+
+      // Клик по бригаде
+      map.on('click', 'brigades-circle', (e: maplibregl.MapMouseEvent) => {
+        const features = (e as any).features;
+        if (features && features.length > 0) {
+          const props = features[0].properties;
+          alert(`Бригада: ${props.brigade_name}\nСтатус: ${props.status}\nТелефон: ${props.phone || '—'}`);
+        }
+      });
+
+      // Курсор при наведении на бригаду
+      map.on('mouseenter', 'brigades-circle', () => { map.getCanvas().style.cursor = 'pointer'; });
+      map.on('mouseleave', 'brigades-circle', () => { map.getCanvas().style.cursor = ''; });
 
       // Клик по кабелю
       map.on('click', 'cables-line', (e: maplibregl.MapMouseEvent) => {
